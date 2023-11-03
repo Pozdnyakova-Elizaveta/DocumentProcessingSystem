@@ -18,6 +18,7 @@ dependencies {
     implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
     compileOnly("org.projectlombok:lombok:1.18.28")
     annotationProcessor("org.projectlombok:lombok:1.18.28")
+    implementation("ma.glasnost.orika:orika-core:1.5.4")
 
 }
 
