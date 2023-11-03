@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -16,7 +16,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 public class DocumentEntity {
     @Id
     @GeneratedValue(strategy = SEQUENCE)
-    private String number;
+    private Integer id;
     @Column(length = 100)
     private String documentType;
     @Column(length = 50)
