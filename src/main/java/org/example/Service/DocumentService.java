@@ -1,6 +1,7 @@
-package org.example;
+package org.example.Service;
 
 
+import org.example.DocumentDTO;
 
 public interface DocumentService {
     DocumentDTO createRecord(DocumentDTO document);

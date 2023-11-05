@@ -1,9 +1,12 @@
-package org.example;
+package org.example.Service;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.example.DAO.DocumentDAO;
 import org.example.DAO.DocumentDAOImpl;
+import org.example.DocumentDTO;
+import org.example.DocumentEntity;
+import org.example.Service.DocumentService;
 
 public class DocumentServiceImpl implements DocumentService {
     private final DocumentDAO dao = new DocumentDAOImpl();

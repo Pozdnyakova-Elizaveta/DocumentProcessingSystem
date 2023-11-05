@@ -18,7 +18,9 @@ public class DocumentDAOImpl implements DocumentDAO{
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         document.setStatus(DocumentStatus.NEW.getStatus());
-        document.setDate(new Date());
+        Date today = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("dd MMMM yyyy");
+        document.setDate(date.format(today));
         entityManager.persist(document);
         transaction.commit();
         DocumentEntity saved = entityManager.find(DocumentEntity.class, document.getId());

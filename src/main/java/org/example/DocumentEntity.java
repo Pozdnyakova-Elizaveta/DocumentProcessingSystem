@@ -22,7 +22,7 @@ public class DocumentEntity {
     @Column(length = 50)
     private String organization;
     @Column
-    private Date date;
+    private String date;
     @Column(length = 100)
     private String description;
     @Column(length = 60)
