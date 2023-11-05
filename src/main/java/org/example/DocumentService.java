@@ -1,6 +1,5 @@
-package org.example.Service;
+package org.example;
 
-import org.example.DocumentDTO;
 
 
 public interface DocumentService {
