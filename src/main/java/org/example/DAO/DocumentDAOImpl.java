@@ -8,6 +8,7 @@ import org.example.DocumentStatus;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -38,5 +39,13 @@ public class DocumentDAOImpl implements DocumentDAO{
         transaction.commit();
         entityManager.close();
         return load;
+    }
+
+    @Override
+    public List<DocumentEntity> getRecords() {
+        EntityManager entityManager = DatabaseConnection.getEntityManagerFactory().createEntityManager();
+        List<DocumentEntity> resultList = entityManager.createQuery("SELECT e FROM DocumentEntity e").getResultList();
+        entityManager.close();
+        return resultList;
     }
 }
