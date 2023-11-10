@@ -7,7 +7,6 @@ import org.example.DocumentEntity;
 import java.util.List;
 
 public interface DocumentService {
-    DocumentDTO createRecord(DocumentDTO document);
-    DocumentDTO updateStatus(DocumentDTO document, String status);
-    List<DocumentDTO> getRecords();
+    void createRecord(DocumentDTO document);
+    List<DocumentEntity> getRecords();
 }

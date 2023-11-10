@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentDTO {
-    private Integer id;
+    private Long id;
     private String documentType;
     private String organization;
     private String date;

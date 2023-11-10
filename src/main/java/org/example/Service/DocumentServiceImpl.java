@@ -1,33 +1,27 @@
 package org.example.Service;
 
+import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.example.DAO.DocumentDAO;
-import org.example.DAO.DocumentDAOImpl;
 import org.example.DocumentDTO;
 import org.example.DocumentEntity;
-import org.example.Service.DocumentService;
+import org.example.repository.DocumentsRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
+@RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
-    private final DocumentDAO dao = new DocumentDAOImpl();
+    private final DocumentsRepository documentsRepository;
     private final MapperFacade mapperFacade = new DefaultMapperFactory.Builder().build().getMapperFacade();
     @Override
-    public DocumentDTO createRecord(DocumentDTO document){
-        DocumentEntity documentEntity = dao.createRecord(mapperFacade.map(document, DocumentEntity.class));
-        return mapperFacade.map(documentEntity, DocumentDTO.class);
+    public void createRecord(DocumentDTO document){
+        DocumentEntity entity = mapperFacade.map(document, DocumentEntity.class);
+        documentsRepository.save(entity);
     }
 
     @Override
-    public DocumentDTO updateStatus(DocumentDTO document, String status) {
-        DocumentEntity documentEntity = dao.updateStatus(mapperFacade.map(document, DocumentEntity.class), status);
-        return mapperFacade.map(documentEntity, DocumentDTO.class);
-    }
-
-    @Override
-    public List<DocumentDTO> getRecords() {
-        List<DocumentEntity> document = dao.getRecords();
-        return mapperFacade.mapAsList(document, DocumentDTO.class);
+    public List<DocumentEntity> getRecords() {
+        return mapperFacade.mapAsList(documentsRepository.findAll(), DocumentEntity.class);
     }
 }

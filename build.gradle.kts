@@ -14,7 +14,7 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("org.hibernate.orm:hibernate-core:6.2.7.Final")
+    implementation("org.hibernate:hibernate-core:5.6.15.Final")
     implementation("org.postgresql:postgresql:42.6.0")
     compileOnly("org.projectlombok:lombok:1.18.28")
     annotationProcessor("org.projectlombok:lombok:1.18.28")
@@ -24,34 +24,14 @@ dependencies {
     liquibaseRuntime("ch.qos.logback:logback-classic:1.2.6")
     liquibaseRuntime("jakarta.xml.bind:jakarta.xml.bind-api:2.3.2")
     liquibaseRuntime("org.postgresql:postgresql:42.6.0")
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
-    // https://mvnrepository.com/artifact/org.springframework/spring-context
-    implementation("org.springframework:spring-context:5.3.30")
+    implementation("org.springframework:spring-webmvc:5.3.15")
+    implementation("org.springframework:spring-jdbc:5.3.15")
+    implementation("org.springframework.data:spring-data-jpa:2.7.8")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("jstl:jstl:1.2")
 
 
 }
-
 tasks.test {
     useJUnitPlatform()
-}
-extra.apply {
-    set("db_url", "jdbc:postgresql://localhost:5432/postgres")
-    set("db_user", "postgres")
-    set("db_pass", "Postgres")
-}
-liquibase {
-    activities.register("main"){
-        val db_url by project.extra.properties
-        val db_user by project.extra.properties
-        val db_pass by project.extra.properties
-        this.arguments= mapOf(
-                "logLevel" to "info",
-                "changeLogFile" to "src/main/resources/migrations/db.changelog-master.xml",
-                "url" to db_url,
-                "username" to db_user,
-                "password" to db_pass,
-                "driver" to "org.postgresql.Driver"
-        )
-        runList = "main"
-    }
 }

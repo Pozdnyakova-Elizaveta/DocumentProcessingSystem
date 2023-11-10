@@ -1,25 +1,27 @@
 package org.example;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UuidGenerator;
-
 
 import java.util.Date;
 
-import static jakarta.persistence.GenerationType.AUTO;
-import static jakarta.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.SEQUENCE;
+
 
 @Entity
 @Table (name = "document")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 public class DocumentEntity {
     @Id
     @GeneratedValue(strategy = SEQUENCE)
-    private Integer id;
+    private Long id;
     @Column(length = 100)
     private String documentType;
     @Column(length = 50)
