@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 
 @Entity
-@Table (name = "document")
+@Table (name = "documents")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,13 +26,13 @@ public class DocumentEntity {
     private String documentType;
     @Column(length = 50)
     private String organization;
-    @Column
+    @Column (length = 30)
     private String date;
     @Column(length = 100)
     private String description;
     @Column(length = 60)
     private String patient;
-    @Column
+    @Column (length=15)
     private String status;
 
 }

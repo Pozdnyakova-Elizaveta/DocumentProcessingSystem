@@ -1,11 +1,12 @@
-package org.example.Service;
+package org.example.service;
 
 
 import org.example.DocumentDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-
+@Service
 public interface DocumentService {
     /**
      * Сохранить документ

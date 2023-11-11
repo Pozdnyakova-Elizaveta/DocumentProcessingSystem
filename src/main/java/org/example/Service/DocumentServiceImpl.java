@@ -1,4 +1,4 @@
-package org.example.Service;
+package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
