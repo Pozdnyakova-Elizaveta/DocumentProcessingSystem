@@ -23,7 +23,7 @@ public class DocumentController{
 
     @RequestMapping(path = "/documents", method = RequestMethod.GET)
     private ModelAndView getDocuments(){
-        List<DocumentEntity> all = documentService.getRecords();
+        List<DocumentDTO> all = documentService.findAll();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("documents");
         modelAndView.addObject("documentsFromServer", all);
@@ -38,7 +38,7 @@ public class DocumentController{
                 .description(document.getDescription())
                 .patient(document.getPatient())
                 .status(DocumentStatus.NEW.getStatus()).build();
-        documentService.createRecord(build);
+        documentService.save(build);
         return "redirect:/documents";
     }
 }
