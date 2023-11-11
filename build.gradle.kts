@@ -29,6 +29,7 @@ dependencies {
     implementation("org.springframework.data:spring-data-jpa:2.7.8")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation("jstl:jstl:1.2")
+    implementation("org.springframework.boot:spring-boot-starter-aop:2.7.17")
 
 
 }
