@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Заголовок</title>
-    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/webapp/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
 

@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Data
 public class DocumentEntity {
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(length = 100)
     private String documentType;
