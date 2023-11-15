@@ -26,8 +26,8 @@ public class DocumentEntity {
     private String documentType;
     @Column(length = 50)
     private String organization;
-    @Column (length = 30)
-    private String date;
+    @Column
+    private Date date;
     @Column(length = 100)
     private String description;
     @Column(length = 60)

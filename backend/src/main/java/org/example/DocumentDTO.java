@@ -16,7 +16,7 @@ public class DocumentDTO {
     private Long id;
     private String documentType;
     private String organization;
-    private String date;
+    private Date date;
     private String description;
     private String patient;
     private String status;

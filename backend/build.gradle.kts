@@ -1,8 +1,8 @@
 plugins {
     id("java")
-    id ("org.liquibase.gradle") version "2.2.0"
+    id ("org.liquibase.gradle") version "2.0.4"
     id ("war")
-    id("org.springframework.boot") version "2.4.4"
+    id("org.springframework.boot") version "2.3.4.RELEASE"
 }
 
 group = "org.example"
@@ -25,11 +25,15 @@ dependencies {
     liquibaseRuntime("ch.qos.logback:logback-classic:1.2.6")
     liquibaseRuntime("jakarta.xml.bind:jakarta.xml.bind-api:2.3.2")
     liquibaseRuntime("org.postgresql:postgresql:42.6.0")
-    implementation("org.springframework.boot:spring-boot-starter-web:2.7.0")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.7.0")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.3.4.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.3.4.RELEASE")
     implementation("javax.servlet:javax.servlet-api:4.0.1")
     implementation("jstl:jstl:1.2")
-    implementation("org.springframework.boot:spring-boot-starter-aop:2.7.17")
+    implementation("org.springframework.boot:spring-boot-starter-aop:2.3.4.RELEASE")
+    implementation("co.elastic.logging:logback-ecs-encoder:1.5.0")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE")
+    compileOnly("org.springframework.boot:spring-boot-configuration-processor:2.3.4.RELEASE")
 
 
 }
@@ -54,7 +58,7 @@ liquibase {
                 "url" to db_url,
                 "username" to db_user,
                 "password" to db_pass,
-                "driver" to "org.postgresql.Driver",
+                "driver" to "org.postgresql.Driver"
         )
     }
     runList = "main"

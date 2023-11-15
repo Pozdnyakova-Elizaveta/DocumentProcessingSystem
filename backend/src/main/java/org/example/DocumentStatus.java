@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum DocumentStatus {
-    NEW ("Новый"),
-    PROCESSING("В обработке"),
-    ACCEPTED("Принят"),
-    REJECTED("Отклонен");
+    NEW ("РќРѕРІС‹Р№"),
+    PROCESSING("Р’ РѕР±СЂР°Р±РѕС‚РєРµ"),
+    ACCEPTED("РџСЂРёРЅСЏС‚"),
+    REJECTED("РћС‚РєР»РѕРЅРµРЅ");
     private final String status;
     DocumentStatus(String status) {
         this.status = status;

@@ -27,7 +27,7 @@ public class DocumentController {
     public DocumentDTO save(@RequestBody DocumentDTO dto) {
         DocumentDTO build = DocumentDTO.builder()
                 .documentType(dto.getDocumentType())
-                .date(new SimpleDateFormat("d MMMM yyyy HH:mm").format(new Date()))
+                .date(new Date())
                 .organization(dto.getOrganization())
                 .description(dto.getDescription())
                 .patient(dto.getPatient())
