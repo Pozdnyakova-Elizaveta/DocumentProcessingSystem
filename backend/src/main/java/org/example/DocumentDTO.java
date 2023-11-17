@@ -14,10 +14,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class DocumentDTO {
     private Long id;
-    private String documentType;
+    private String type;
     private String organization;
     private Date date;
     private String description;
     private String patient;
-    private String status;
+    private Status status;
 }

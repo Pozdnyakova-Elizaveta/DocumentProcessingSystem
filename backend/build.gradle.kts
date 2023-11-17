@@ -1,7 +1,6 @@
 plugins {
     id("java")
     id ("org.liquibase.gradle") version "2.0.4"
-    id ("war")
     id("org.springframework.boot") version "2.3.4.RELEASE"
 }
 

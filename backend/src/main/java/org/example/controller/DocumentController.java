@@ -2,7 +2,7 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.DocumentDTO;
-import org.example.DocumentStatus;
+import org.example.Status;
 import org.example.annotation.LogMethodInfo;
 import org.example.service.DocumentService;
 import org.example.service.DocumentServiceImpl;
@@ -26,12 +26,12 @@ public class DocumentController {
     @LogMethodInfo
     public DocumentDTO save(@RequestBody DocumentDTO dto) {
         DocumentDTO build = DocumentDTO.builder()
-                .documentType(dto.getDocumentType())
+                .type(dto.getType())
                 .date(new Date())
                 .organization(dto.getOrganization())
                 .description(dto.getDescription())
                 .patient(dto.getPatient())
-                .status(DocumentStatus.NEW.getStatus()).build();
+                .status(Status.ofCode("IN_PROCESS")).build();
         return service.save(build);
     }
 

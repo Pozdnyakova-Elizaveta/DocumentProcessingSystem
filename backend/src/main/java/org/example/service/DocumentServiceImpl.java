@@ -5,27 +5,35 @@ import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.example.DocumentDTO;
 import org.example.DocumentEntity;
+import org.example.Status;
 import org.example.repository.DocumentsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-
 @Service
-@RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
-    private final DocumentsRepository documentsRepository;
-    private final MapperFacade mapperFacade = new DefaultMapperFactory.Builder().build().getMapperFacade();
-
+    @Autowired
+    private DocumentsRepository documentsRepository;
+    private final CustomMapperFacade customMapperFacade = new CustomMapperFacadeImpl();
     public DocumentDTO save(DocumentDTO documentDTO) {
-        DocumentEntity entity = mapperFacade.map(documentDTO, DocumentEntity.class);
+        DocumentDTO build = DocumentDTO.builder()
+                .type(documentDTO.getType())
+                .date(new Date())
+                .organization(documentDTO.getOrganization())
+                .description(documentDTO.getDescription())
+                .patient(documentDTO.getPatient())
+                .status(Status.ofCode("NEW")).build();
+        DocumentEntity entity = customMapperFacade.mapToEntity(build);
         documentsRepository.save(entity);
-        return documentDTO;
+        return build;
     }
-
     public void deleteAll(Set<Long> ids) {
-       // documentsRepository.deleteAllById(ids);
-
+        for (Long id: ids)
+            documentsRepository.deleteById(id);
     }
 
     public void delete(Long id) {
@@ -38,10 +46,16 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     public List<DocumentDTO> findAll() {
-        return mapperFacade.mapAsList(documentsRepository.findAll(), DocumentDTO.class);
+        List<DocumentEntity> entityList= documentsRepository.findAll();
+        return customMapperFacade.mapAsListDTO(entityList);
     }
 
     public DocumentDTO get(Long id) {
-        return mapperFacade.map(documentsRepository.findById(id), DocumentDTO.class);
+        DocumentDTO documentDTO=new DocumentDTO();
+        Optional<DocumentEntity> entity = documentsRepository.findById(id);
+        if (entity.isPresent()) {
+            documentDTO = customMapperFacade.mapToDTO(entity.get());
+        }
+        return documentDTO;
     }
 }

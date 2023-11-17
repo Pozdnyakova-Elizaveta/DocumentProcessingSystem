@@ -5,11 +5,11 @@
 create table documents
 (
     id           serial primary key,
-    documentType varchar(100),
-    organization varchar(50),
-    date         varchar(30),
-    description  varchar(100),
-    patient      varchar(60),
+    type varchar(100) not null,
+    organization varchar(50) not null,
+    date         date,
+    description  varchar(100) not null,
+    patient      varchar(60) not null,
     status       varchar(15)
 );
 -- rollback drop table documents

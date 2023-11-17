@@ -23,7 +23,7 @@ public class DocumentEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(length = 100)
-    private String documentType;
+    private String type;
     @Column(length = 50)
     private String organization;
     @Column
