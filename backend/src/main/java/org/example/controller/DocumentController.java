@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/documents")
@@ -31,7 +32,7 @@ public class DocumentController {
                 .organization(dto.getOrganization())
                 .description(dto.getDescription())
                 .patient(dto.getPatient())
-                .status(Status.ofCode("IN_PROCESS")).build();
+                .status(Status.ofCode("NEW")).build();
         return service.save(build);
     }
 
@@ -42,8 +43,23 @@ public class DocumentController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable Long id) {
+    @LogMethodInfo
+    public void delete(@PathVariable("id") Long id) {
         service.delete(id);
     }
-
+    @PostMapping(
+            path = "send",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @LogMethodInfo
+    public DocumentDTO send(@RequestBody IdDTO id) {
+        DocumentDTO document = service.get(id.getId());
+        document.setStatus(Status.ofCode("IN_PROCESS"));
+        return service.update(document);
+    }
+    @DeleteMapping
+    @LogMethodInfo
+    public void deleteAll(@RequestBody IdsDTO idsDto) {
+        service.deleteAll(idsDto);
+    }
 }

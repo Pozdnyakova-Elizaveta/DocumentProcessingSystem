@@ -2,6 +2,7 @@ package org.example.service;
 
 
 import org.example.DocumentDTO;
+import org.example.controller.IdsDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface DocumentService {
      * Удалить документ
      * @param ids идентификаторы документов
      */
-    void deleteAll(Set<Long> ids);
+    void deleteAll(IdsDTO ids);
 
     /**
      * Удалить документ по ид
