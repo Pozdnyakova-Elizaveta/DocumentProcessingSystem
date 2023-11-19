@@ -8,6 +8,8 @@ import org.example.service.DocumentService;
 import org.example.service.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+//import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,15 +27,8 @@ public class DocumentController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogMethodInfo
-    public DocumentDTO save(@RequestBody DocumentDTO dto) {
-        DocumentDTO build = DocumentDTO.builder()
-                .type(dto.getType())
-                .date(new Date())
-                .organization(dto.getOrganization())
-                .description(dto.getDescription())
-                .patient(dto.getPatient())
-                .status(Status.ofCode("NEW")).build();
-        return service.save(build);
+    public DocumentDTO save(@Validated @RequestBody DocumentDTO dto) {
+        return service.save(dto);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,13 +48,11 @@ public class DocumentController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogMethodInfo
     public DocumentDTO send(@RequestBody IdDTO id) {
-        DocumentDTO document = service.get(id.getId());
-        document.setStatus(Status.ofCode("IN_PROCESS"));
-        return service.update(document);
+        return service.update(id.getId(), "IN_PROCESS");
     }
     @DeleteMapping
     @LogMethodInfo
     public void deleteAll(@RequestBody IdsDTO idsDto) {
-        service.deleteAll(idsDto);
+        service.deleteAll(idsDto.getIds());
     }
 }

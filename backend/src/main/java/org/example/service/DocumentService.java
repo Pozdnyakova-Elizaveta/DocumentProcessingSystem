@@ -20,7 +20,7 @@ public interface DocumentService {
      * Удалить документ
      * @param ids идентификаторы документов
      */
-    void deleteAll(IdsDTO ids);
+    void deleteAll(Set <Long> ids);
 
     /**
      * Удалить документ по ид
@@ -30,10 +30,10 @@ public interface DocumentService {
 
     /**
      * Обновить документ
-     * @param documentDto документ
+     * @param id документ
      * @return обновленный документ
      */
-    DocumentDTO update(DocumentDTO documentDto);
+    DocumentDTO update(Long id, String codeStatus);
 
     /**
      * Получить все документы

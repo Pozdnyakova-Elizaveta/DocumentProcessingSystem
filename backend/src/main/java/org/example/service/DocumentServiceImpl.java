@@ -32,11 +32,11 @@ public class DocumentServiceImpl implements DocumentService {
                 .status(Status.ofCode("NEW")).build();
         DocumentEntity entity = customMapperFacade.mapToEntity(build);
         documentsRepository.save(entity);
-        return build;
+        return customMapperFacade.mapToDTO(entity);
     }
     @Transactional
-    public void deleteAll(IdsDTO ids) {
-        for (Long id: ids.getIds()) {
+    public void deleteAll(Set <Long> ids) {
+        for (Long id: ids) {
             documentsRepository.deleteById(id);
         }
     }
@@ -45,9 +45,9 @@ public class DocumentServiceImpl implements DocumentService {
         documentsRepository.deleteById(id);
     }
     @Transactional
-    public DocumentDTO update(DocumentDTO documentDto) {
-        documentsRepository.updateStatus(documentDto.getId(), documentDto.getStatus().getName());
-        return documentDto;
+    public DocumentDTO update(Long id, String codeStatus) {
+        documentsRepository.updateStatus(id, Status.ofCode(codeStatus).getName());
+        return get(id);
     }
     @Transactional
     public List<DocumentDTO> findAll() {
@@ -56,10 +56,13 @@ public class DocumentServiceImpl implements DocumentService {
     }
     @Transactional
     public DocumentDTO get(Long id) {
-        DocumentDTO documentDTO=new DocumentDTO();
+        DocumentDTO documentDTO;
         Optional<DocumentEntity> entity = documentsRepository.findById(id);
         if (entity.isPresent()) {
             documentDTO = customMapperFacade.mapToDTO(entity.get());
+        }
+        else{
+            throw new IllegalStateException();
         }
         return documentDTO;
     }

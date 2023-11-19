@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.codehaus.commons.nullanalysis.NotNull;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 
@@ -12,6 +14,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Validated
 public class DocumentDTO {
     private Long id;
     private String type;

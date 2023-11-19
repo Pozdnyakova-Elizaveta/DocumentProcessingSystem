@@ -15,7 +15,7 @@ public class Status {
         VALUES.put("NEW","Новый");
         VALUES.put("IN_PROCESS", "В обработке");
         VALUES.put("ACCEPTED","Принят");
-        VALUES.put("REJECT", "Отклонен");
+        VALUES.put("DECLINED", "Отклонен");
     }
     public static Status ofCode(String code) {
         Status codeName = new Status();

@@ -33,6 +33,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:2.3.4.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter:2.3.4.RELEASE")
 
 
 }
