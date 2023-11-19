@@ -34,6 +34,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.3.4.RELEASE")
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:2.3.4.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter:2.3.4.RELEASE")
+    implementation("org.springframework.kafka:spring-kafka:2.9.12")
 
 
 }

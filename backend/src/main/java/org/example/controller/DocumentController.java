@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.DocumentDTO;
 import org.example.Status;
 import org.example.annotation.LogMethodInfo;
+import org.example.kafka.KafkaSender;
 import org.example.service.DocumentService;
 import org.example.service.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("/documents")
 public class DocumentController {
+    @Autowired
+    private KafkaSender kafkaSender;
     @Autowired
     private DocumentService service;
     @PostMapping(
@@ -48,6 +51,7 @@ public class DocumentController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogMethodInfo
     public DocumentDTO send(@RequestBody IdDTO id) {
+        kafkaSender.sendMessage(service.get(id.getId()));
         return service.update(id.getId(), "IN_PROCESS");
     }
     @DeleteMapping
