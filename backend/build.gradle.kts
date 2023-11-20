@@ -35,6 +35,7 @@ dependencies {
     compileOnly("org.springframework.boot:spring-boot-configuration-processor:2.3.4.RELEASE")
     implementation("org.springframework.boot:spring-boot-starter:2.3.4.RELEASE")
     implementation("org.springframework.kafka:spring-kafka:2.9.12")
+    implementation("org.springframework.boot:spring-boot-starter-validation:2.3.4.RELEASE")
 
 
 }

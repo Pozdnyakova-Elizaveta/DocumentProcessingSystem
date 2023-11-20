@@ -14,8 +14,7 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 public class KafkaTopicConfig {
-    @Value(value = "localhost:29092")
-    private String bootstrapAddress;
+    private String bootstrapAddress="localhost:29092";
 
     @Bean
     public KafkaAdmin kafkaAdmin() {
@@ -27,5 +26,9 @@ public class KafkaTopicConfig {
     @Bean
     public NewTopic topicDocuments() {
         return TopicBuilder.name("documents").partitions(1).replicas(1).build();
+    }
+    @Bean
+    public NewTopic topicDocumentsAnswer() {
+        return TopicBuilder.name("documents_answer").partitions(1).replicas(1).build();
     }
 }

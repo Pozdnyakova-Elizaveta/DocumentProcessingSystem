@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.codehaus.commons.nullanalysis.NotNull;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 
@@ -14,13 +15,16 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Validated
 public class DocumentDTO {
     private Long id;
+    @NotBlank
     private String type;
+    @NotBlank
     private String organization;
     private Date date;
+    @NotBlank
     private String description;
+    @NotBlank
     private String patient;
     private Status status;
 }

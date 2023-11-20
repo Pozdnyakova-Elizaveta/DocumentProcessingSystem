@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class DocumentController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogMethodInfo
-    public DocumentDTO save(@Validated @RequestBody DocumentDTO dto) {
+    public DocumentDTO save(@Valid @RequestBody DocumentDTO dto) {
         return service.save(dto);
     }
 

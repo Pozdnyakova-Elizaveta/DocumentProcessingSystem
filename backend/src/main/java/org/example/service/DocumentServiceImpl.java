@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumentsRepository documentsRepository;
     private final CustomMapperFacade customMapperFacade = new CustomMapperFacadeImpl();
     @Transactional
-    public DocumentDTO save(DocumentDTO documentDTO) {
+    public DocumentDTO save(@Valid DocumentDTO documentDTO) {
         DocumentDTO build = DocumentDTO.builder()
                 .type(documentDTO.getType())
                 .date(new Date())
@@ -62,7 +63,7 @@ public class DocumentServiceImpl implements DocumentService {
             documentDTO = customMapperFacade.mapToDTO(entity.get());
         }
         else{
-            throw new IllegalStateException();
+            throw new IllegalStateException("Записи с таким id нет!");
         }
         return documentDTO;
     }
