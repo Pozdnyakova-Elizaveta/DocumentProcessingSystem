@@ -52,8 +52,9 @@ public class DocumentController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @LogMethodInfo
     public DocumentDTO send(@RequestBody IdDTO id) {
+        DocumentDTO documentDTO = service.update(id.getId(), "IN_PROCESS");
         kafkaSender.sendMessage(service.get(id.getId()));
-        return service.update(id.getId(), "IN_PROCESS");
+        return documentDTO;
     }
     @DeleteMapping
     @LogMethodInfo
