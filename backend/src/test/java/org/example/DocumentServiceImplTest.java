@@ -1,13 +1,12 @@
 package org.example;
 
-import org.example.DocumentDTO;
-import org.example.Status;
 import org.example.service.DocumentServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 
 
@@ -21,26 +20,43 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Тестирование сервисов
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 public class DocumentServiceImplTest {
+    /**
+     * Объект для выполнения сервисов
+     */
+    private final DocumentServiceImpl documentService;
+
     @Autowired
-    private DocumentServiceImpl documentService;
+    public DocumentServiceImplTest(DocumentServiceImpl documentService) {
+        this.documentService = documentService;
+    }
+
+    /**
+     * Документы для тестирования
+     */
     private final DocumentDTO firstExampleDocumentDTO = DocumentDTO.builder().patient("Иванов И. И.")
             .description("Больничный лист").organization("Поликлиника №2").type("Больничный")
-            .date(new Date()).status(Status.ofCode("NEW")).build();
+            .date(new Date()).status(new Status("NEW")).build();
     private final DocumentDTO secondExampleDocumentDTO = DocumentDTO.builder().patient("Петров В. С.")
             .description("Талон").organization("Поликлиника №10").type("Талон к терапевту")
-            .date(new Date()).status(Status.ofCode("NEW")).build();
+            .date(new Date()).status(new Status("NEW")).build();
 
     @BeforeEach
     public void before() {
-        List <DocumentDTO> documentDTOs = documentService.findAll();
-        for (DocumentDTO documentDTO: documentDTOs ){
+        List<DocumentDTO> documentDTOs = documentService.findAll();
+        for (DocumentDTO documentDTO : documentDTOs) {
             documentService.delete(documentDTO.getId());
         }
     }
 
+    /**
+     * Тест сохранения и получения документа
+     */
     @Test
     public void saveGetTest() {
         DocumentDTO saveDocumentDTO = documentService.save(firstExampleDocumentDTO);
@@ -50,6 +66,9 @@ public class DocumentServiceImplTest {
         assertEquals(id, getDocumentDTO.getId());
     }
 
+    /**
+     * Тест обновления статуса
+     */
     @Test
     void update() {
         DocumentDTO saveDocumentDTO = documentService.save(firstExampleDocumentDTO);
@@ -59,6 +78,9 @@ public class DocumentServiceImplTest {
         assertEquals("IN_PROCESS", getDocumentDTO.getStatus().getCode());
     }
 
+    /**
+     * Тест удаления одной записи
+     */
     @Test
     void delete() {
         DocumentDTO saveDocumentDTO = documentService.save(firstExampleDocumentDTO);
@@ -66,6 +88,9 @@ public class DocumentServiceImplTest {
         assertEquals(0, documentService.findAll().size());
     }
 
+    /**
+     * Тест удаления нескольких записей
+     */
     @Test
     void deleteAll() {
         DocumentDTO saveDocumentDTO = documentService.save(firstExampleDocumentDTO);
@@ -74,6 +99,9 @@ public class DocumentServiceImplTest {
         assertEquals(0, documentService.findAll().size());
     }
 
+    /**
+     * Тест получения всех документов
+     */
     @Test
     void findAll() {
         DocumentDTO saveDocumentDTO = documentService.save(firstExampleDocumentDTO);
@@ -86,8 +114,20 @@ public class DocumentServiceImplTest {
         assertNotNull(allDocumentMap.get(secondSaveDocumentDTO.getId()));
     }
 
+    /**
+     * Тест неудачной попытки получить несуществующий документ
+     */
     @Test
     void getWhenNotExistsTest() {
         Assertions.assertThrows(IllegalStateException.class, () -> documentService.get(5L));
+    }
+
+    /**
+     * Тест неудачной попытки сохранить пустую запись
+     */
+    @Test
+    void saveEmptyTest() {
+        DocumentDTO documentDTO = new DocumentDTO();
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> documentService.save(documentDTO));
     }
 }

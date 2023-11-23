@@ -1,12 +1,8 @@
 package org.example.service;
 
-import lombok.RequiredArgsConstructor;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.example.DocumentDTO;
 import org.example.DocumentEntity;
 import org.example.Status;
-import org.example.controller.IdsDTO;
 import org.example.repository.DocumentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +13,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+/**
+ * Имплементация сервисов
+ */
 @Service
 public class DocumentServiceImpl implements DocumentService {
+    /**
+     * Репозиторий для работы с БД
+     */
+    private final DocumentsRepository documentsRepository;
+
     @Autowired
-    private DocumentsRepository documentsRepository;
+    public DocumentServiceImpl(DocumentsRepository documentsRepository) {
+        this.documentsRepository = documentsRepository;
+
+    }
+
+    /**
+     * Фасад для маппинга DTO и Entity
+     */
     private final CustomMapperFacade customMapperFacade = new CustomMapperFacadeImpl();
+
     @Transactional
     public DocumentDTO save(@Valid DocumentDTO documentDTO) {
         DocumentDTO build = DocumentDTO.builder()
@@ -30,39 +43,43 @@ public class DocumentServiceImpl implements DocumentService {
                 .organization(documentDTO.getOrganization())
                 .description(documentDTO.getDescription())
                 .patient(documentDTO.getPatient())
-                .status(Status.ofCode("NEW")).build();
+                .status(new Status("NEW")).build();
         DocumentEntity entity = customMapperFacade.mapToEntity(build);
         documentsRepository.save(entity);
         return customMapperFacade.mapToDTO(entity);
     }
+
     @Transactional
-    public void deleteAll(Set <Long> ids) {
-        for (Long id: ids) {
+    public void deleteAll(Set<Long> ids) {
+        for (Long id : ids) {
             documentsRepository.deleteById(id);
         }
     }
+
     @Transactional
     public void delete(Long id) {
         documentsRepository.deleteById(id);
     }
+
     @Transactional
     public DocumentDTO update(Long id, String codeStatus) {
-        documentsRepository.updateStatus(id, Status.ofCode(codeStatus).getName());
+        documentsRepository.updateStatus(id, new Status(codeStatus).getName());
         return get(id);
     }
+
     @Transactional
     public List<DocumentDTO> findAll() {
-        List<DocumentEntity> entityList= documentsRepository.findAll();
+        List<DocumentEntity> entityList = documentsRepository.findAll();
         return customMapperFacade.mapAsListDTO(entityList);
     }
+
     @Transactional
     public DocumentDTO get(Long id) {
         DocumentDTO documentDTO;
         Optional<DocumentEntity> entity = documentsRepository.findById(id);
         if (entity.isPresent()) {
             documentDTO = customMapperFacade.mapToDTO(entity.get());
-        }
-        else{
+        } else {
             throw new IllegalStateException("Записи с таким id нет!");
         }
         return documentDTO;

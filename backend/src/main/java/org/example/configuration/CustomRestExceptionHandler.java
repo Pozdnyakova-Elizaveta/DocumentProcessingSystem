@@ -19,13 +19,18 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 /**
- * Intercepts controller exception
+ * Класс обработки исключений контроллера
  */
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
-
     /**
-     * 400
+     * Ошибка валидации - 400
+     *
+     * @param ex      исключение
+     * @param headers заголовок для ответа
+     * @param status  выбранный статус ответа
+     * @param request текущий запрос
+     * @return ответ сервера
      */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex,
@@ -44,6 +49,16 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, restApiError, headers, BAD_REQUEST, request);
     }
 
+    /**
+     * Ошибка чтения сообщения - 400
+     *
+     * @param ex      исключение
+     * @param headers заголовок для ответа
+     * @param status  выбранный статус ответа
+     * @param request текущий запрос
+     * @return ответ сервера
+     */
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers, HttpStatus status,
@@ -55,7 +70,11 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * 500
+     * Ошибка сервера
+     *
+     * @param ex      исключение
+     * @param request текущий запрос
+     * @return ответ сервера
      */
     @ExceptionHandler({Exception.class})
     public ResponseEntity<RestApiError> handleAll(final Exception ex, final WebRequest request) {
@@ -64,9 +83,18 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(restApiError, new HttpHeaders(), INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * Тело ответа
+     */
     public static class RestApiError {
+        /**
+         * Сообщение-название ошибки
+         */
 
         private String message;
+        /**
+         * Лист с информацией об ошибке
+         */
 
         private List<String> errors;
 

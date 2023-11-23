@@ -10,12 +10,29 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Аспект для логирования
+ */
 @Component
 @Aspect
 public class LoggingAspect {
+    /**
+     * Объект для записи логов
+     */
     private final Logger logger = Logger.getLogger(LoggingAspect.class.getName());
+
+    /**
+     * Точка среза
+     */
     @Pointcut("within(org.example.controller.DocumentController)")
-    public void pointcut() {}
+    public void pointcut() {
+    }
+
+    /**
+     * Вывод лога перед выполнением метода
+     *
+     * @param joinPoint точка соединения для получения информации о методе
+     */
     @After("pointcut()")
     public void logInfoMethodCall(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();

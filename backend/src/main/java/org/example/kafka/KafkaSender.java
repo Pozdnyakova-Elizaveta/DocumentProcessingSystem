@@ -7,11 +7,27 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+
+/**
+ * Класс-Producer
+ */
 @Component
 public class KafkaSender {
-    @Autowired
-    private KafkaTemplate<String, DocumentDTO> kafkaTemplate;
+    /**
+     * Обертка для отправки сообщений
+     */
+    private final KafkaTemplate<String, DocumentDTO> kafkaTemplate;
 
+    @Autowired
+    public KafkaSender(KafkaTemplate<String, DocumentDTO> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
+    /**
+     * Метод отправки сообщений
+     *
+     * @param message отправляемый документ
+     */
     public void sendMessage(DocumentDTO message) {
 
         ListenableFuture<SendResult<String, DocumentDTO>> future =

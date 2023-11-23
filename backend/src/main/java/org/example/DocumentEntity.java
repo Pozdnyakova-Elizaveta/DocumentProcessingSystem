@@ -9,30 +9,52 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-import static javax.persistence.GenerationType.SEQUENCE;
 
-
+/**
+ * Сущность документа
+ */
 @Entity
-@Table (name = "documents")
+@Table(name = "documents")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 public class DocumentEntity {
+    /**
+     * Идентификатор документа
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /**
+     * Вид документа
+     */
     @Column(length = 100)
     private String type;
+    /**
+     * Медицинская организация - владелец документа
+     */
     @Column(length = 50)
     private String organization;
+    /**
+     * Дата создания документа
+     */
     @Column
     private Date date;
+    /**
+     * Описание документа
+     */
     @Column(length = 100)
     private String description;
+    /**
+     * Пациент, к которому относится документ
+     */
     @Column(length = 60)
     private String patient;
-    @Column (length=15)
+    /**
+     * Статус документа
+     */
+    @Column(length = 15)
     private String status;
 
 }

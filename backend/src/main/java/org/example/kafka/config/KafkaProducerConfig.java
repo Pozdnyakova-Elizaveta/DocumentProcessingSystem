@@ -13,9 +13,16 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Класс настройки Producer
+ */
 @Configuration
 public class KafkaProducerConfig {
-
+    /**
+     * Создание объекта ProducerFactory со стратегией создания Producer
+     *
+     * @return созданный ProducerFactory
+     */
     @Bean
     public ProducerFactory<String, DocumentDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -31,6 +38,11 @@ public class KafkaProducerConfig {
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
+    /**
+     * Обертка KafkaTemplate для Producer'a
+     *
+     * @return созданный KafkaTemplate
+     */
     @Bean
     public KafkaTemplate<String, DocumentDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());

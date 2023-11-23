@@ -10,8 +10,16 @@ import org.springframework.context.annotation.Primary;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * Класс для конвертации JSON и объектов
+ */
 @Configuration
 public class JacksonConfiguration {
+    /**
+     * Создание маппера для преобразования JSON в объекты
+     *
+     * @return маппер
+     */
     @Bean
     @Primary
     public ObjectMapper objectMapper() {
