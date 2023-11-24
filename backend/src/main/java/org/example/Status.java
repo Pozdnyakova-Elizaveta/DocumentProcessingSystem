@@ -38,7 +38,7 @@ public class Status {
     public Status(String code) {
         this.code = code;
         if (!VALUES.containsKey(code)) {
-            throw new NoSuchElementException("Такого ключа нет!");
+            throw new NoSuchElementException("Такого кода статуса нет!");
         }
         this.name = VALUES.get(code);
     }

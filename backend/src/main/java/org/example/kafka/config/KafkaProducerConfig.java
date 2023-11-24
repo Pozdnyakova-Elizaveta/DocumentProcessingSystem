@@ -1,6 +1,7 @@
 package org.example.kafka.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.example.DocumentDTO;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +25,14 @@ public class KafkaProducerConfig {
      * @return созданный ProducerFactory
      */
     @Bean
-    public ProducerFactory<String, DocumentDTO> producerFactory() {
+    public ProducerFactory<Long, DocumentDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 "localhost:29092");
         configProps.put(
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class);
+                LongSerializer.class);
         configProps.put(
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 JsonSerializer.class);
@@ -44,7 +45,7 @@ public class KafkaProducerConfig {
      * @return созданный KafkaTemplate
      */
     @Bean
-    public KafkaTemplate<String, DocumentDTO> kafkaTemplate() {
+    public KafkaTemplate<Long, DocumentDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

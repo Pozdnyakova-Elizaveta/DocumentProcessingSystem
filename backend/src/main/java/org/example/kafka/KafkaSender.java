@@ -16,10 +16,10 @@ public class KafkaSender {
     /**
      * Обертка для отправки сообщений
      */
-    private final KafkaTemplate<String, DocumentDTO> kafkaTemplate;
+    private final KafkaTemplate<Long, DocumentDTO> kafkaTemplate;
 
     @Autowired
-    public KafkaSender(KafkaTemplate<String, DocumentDTO> kafkaTemplate) {
+    public KafkaSender(KafkaTemplate<Long, DocumentDTO> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
@@ -28,18 +28,19 @@ public class KafkaSender {
      *
      * @param message отправляемый документ
      */
-    public void sendMessage(DocumentDTO message) {
+    public void sendMessage(Long key, DocumentDTO message) {
 
-        ListenableFuture<SendResult<String, DocumentDTO>> future =
-                kafkaTemplate.send("documents", message);
+        ListenableFuture<SendResult<Long, DocumentDTO>> future =
+                kafkaTemplate.send("documents", key, message);
         future.addCallback(new ListenableFutureCallback<>() {
+
             @Override
             public void onFailure(Throwable ex) {
                 System.out.println("failure");
             }
 
             @Override
-            public void onSuccess(SendResult<String, DocumentDTO> result) {
+            public void onSuccess(SendResult<Long, DocumentDTO> result) {
                 System.out.println("success");
             }
         });

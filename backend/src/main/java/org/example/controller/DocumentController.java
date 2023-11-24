@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.apache.kafka.common.KafkaException;
 import org.example.DocumentDTO;
+import org.example.Status;
 import org.example.annotation.LogMethodInfo;
 import org.example.kafka.KafkaSender;
 import org.example.service.DocumentServiceImpl;
@@ -83,11 +84,9 @@ public class DocumentController {
     @LogMethodInfo
     public DocumentDTO send(@RequestBody IdDTO id) {
         DocumentDTO documentDTO = service.get(id.getId());
-        try {
-            kafkaSender.sendMessage(service.get(id.getId()));
-            documentDTO =service.update(id.getId(), "IN_PROCESS");
-        } catch (KafkaException e){
-            System.out.println("Не удалось отправить сообщение в Kafka");
+        if ("NEW".equals(documentDTO.getStatus().getCode())) {
+                documentDTO = service.update(id.getId(), "IN_PROCESS");
+                kafkaSender.sendMessage(id.getId(), documentDTO);
         }
         return documentDTO;
     }

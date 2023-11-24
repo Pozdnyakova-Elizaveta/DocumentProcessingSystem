@@ -48,8 +48,10 @@ public class KafkaConsumer {
         if (!("IN_PROCESS").equals(statusCodeRecord)) {
             throw new IllegalArgumentException("Этот документ не находится в обработке!");
         }
+        if (!("ACCEPTED").equals(message.getStatus().getCode()) && !("DECLINED").equals(message.getStatus().getCode())) {
+            throw new IllegalArgumentException("Документ может быть только принят или отклонен!");
+        }
         documentService.update(message.getId(), message.getStatus().getCode());
         acknowledgment.acknowledge();
     }
-
 }
