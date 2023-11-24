@@ -23,4 +23,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Postgres
     ports:
-      - '5555:5432'
+      - "5555:5432"
+    volumes:
+      - ./backend/src/main/resources/migrations/01.000.00/changelog-01.sql:/docker-entrypoint-initdb.d/changelog-01.sql
+    restart: unless-stopped

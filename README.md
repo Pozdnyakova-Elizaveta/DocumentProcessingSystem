@@ -53,6 +53,8 @@ http://localhost:3006/#/
 ```
 ### Запуск Kafka
 Запустить в модуле backend docker-compose(broker).yml
+
+Топик "documents" предназначен для получения документов на обработку
 Ответ на документ создается в Offset Explorer в топике "documents_answer"
 
 Формат ответа на полученный документ: {"id":id,"status":status_code}, где id - номер документа, status_code - новое 
