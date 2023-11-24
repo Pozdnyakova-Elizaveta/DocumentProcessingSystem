@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

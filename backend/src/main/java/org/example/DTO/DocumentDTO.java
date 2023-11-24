@@ -1,60 +1,51 @@
-package org.example;
-
-import javax.persistence.*;
+package org.example.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-
 /**
- * Сущность документа
+ * DTO документа
  */
-@Entity
-@Table(name = "documents")
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Data
-public class DocumentEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+public class DocumentDTO {
     /**
      * Идентификатор документа
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * Вид документа
      */
-    @Column(length = 100)
+    @NotBlank
     private String type;
     /**
      * Медицинская организация - владелец документа
      */
-    @Column(length = 50)
+    @NotBlank
     private String organization;
     /**
      * Дата создания документа
      */
-    @Column
     private Date date;
     /**
      * Описание документа
      */
-    @Column(length = 100)
+    @NotBlank
     private String description;
     /**
      * Пациент, к которому относится документ
      */
-    @Column(length = 60)
+    @NotBlank
     private String patient;
     /**
-     * Статус документа
+     * Объект статуса
      */
-    @Column(length = 15)
-    private String status;
-
+    private Status status;
 }

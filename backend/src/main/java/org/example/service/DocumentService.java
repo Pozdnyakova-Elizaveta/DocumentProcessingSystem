@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.DocumentDTO;
+import org.example.DTO.DocumentDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

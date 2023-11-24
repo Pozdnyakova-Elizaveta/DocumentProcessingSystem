@@ -1,8 +1,8 @@
 package org.example.service;
 
-import org.example.DocumentDTO;
-import org.example.DocumentEntity;
-import org.example.Status;
+import org.example.DTO.DocumentDTO;
+import org.example.entity.DocumentEntity;
+import org.example.DTO.Status;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.DTO.DocumentDTO;
+import org.example.DTO.Status;
 import org.example.service.DocumentServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

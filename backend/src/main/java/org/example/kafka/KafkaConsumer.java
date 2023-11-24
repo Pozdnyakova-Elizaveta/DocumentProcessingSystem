@@ -1,6 +1,6 @@
 package org.example.kafka;
 
-import org.example.DocumentDTO;
+import org.example.DTO.DocumentDTO;
 import org.example.service.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -2,9 +2,11 @@ package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.DTO.DocumentDTO;
+import org.example.DTO.Status;
 import org.example.configuration.JacksonConfiguration;
-import org.example.controller.IdDTO;
-import org.example.controller.IdsDTO;
+import org.example.DTO.IdDTO;
+import org.example.DTO.IdsDTO;
 import org.example.service.DocumentServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

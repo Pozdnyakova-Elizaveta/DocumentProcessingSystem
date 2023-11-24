@@ -1,7 +1,7 @@
 package org.example.service;
 
-import org.example.DocumentDTO;
-import org.example.DocumentEntity;
+import org.example.DTO.DocumentDTO;
+import org.example.entity.DocumentEntity;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package org.example.controller;
 
-import org.apache.kafka.common.KafkaException;
-import org.example.DocumentDTO;
-import org.example.Status;
+import org.example.DTO.DocumentDTO;
+import org.example.DTO.IdDTO;
+import org.example.DTO.IdsDTO;
 import org.example.annotation.LogMethodInfo;
 import org.example.kafka.KafkaSender;
 import org.example.service.DocumentServiceImpl;
