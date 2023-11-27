@@ -46,14 +46,9 @@ public class KafkaSender {
 
                 @Override
                 public void onSuccess(SendResult<Long, DocumentDTO> result) {
+                    documentService.update(message.getId(), "IN_PROCESS");
                     System.out.println("success");
                 }
             });
-            try {
-                future.get();
-                documentService.update(message.getId(), "IN_PROCESS");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
     }
 }
