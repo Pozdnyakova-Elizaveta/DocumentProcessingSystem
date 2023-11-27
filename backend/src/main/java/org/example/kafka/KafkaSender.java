@@ -1,6 +1,7 @@
 package org.example.kafka;
 
 import org.example.DTO.DocumentDTO;
+import org.example.service.DocumentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -17,32 +18,42 @@ public class KafkaSender {
      * Обертка для отправки сообщений
      */
     private final KafkaTemplate<Long, DocumentDTO> kafkaTemplate;
+    /**
+     * Объект для выполнения сервисов
+     */
+    private final DocumentServiceImpl documentService;
 
     @Autowired
-    public KafkaSender(KafkaTemplate<Long, DocumentDTO> kafkaTemplate) {
+    public KafkaSender(KafkaTemplate<Long, DocumentDTO> kafkaTemplate, DocumentServiceImpl documentService) {
         this.kafkaTemplate = kafkaTemplate;
+        this.documentService=documentService;
     }
 
     /**
-     * Метод отправки сообщений
-     *
-     * @param message отправляемый документ
+     * Метод для отправки сообщения
+     * @param key ключ сообщения
+     * @param message сообщение
      */
     public void sendMessage(Long key, DocumentDTO message) {
+            ListenableFuture<SendResult<Long, DocumentDTO>> future =
+                    kafkaTemplate.send("documents", key, message);
+            future.addCallback(new ListenableFutureCallback<>() {
 
-        ListenableFuture<SendResult<Long, DocumentDTO>> future =
-                kafkaTemplate.send("documents", key, message);
-        future.addCallback(new ListenableFutureCallback<>() {
+                @Override
+                public void onFailure(Throwable ex) {
+                    System.out.println("failure: " + ex.getMessage());
+                }
 
-            @Override
-            public void onFailure(Throwable ex) {
-                System.out.println("failure: " + ex.getMessage());
+                @Override
+                public void onSuccess(SendResult<Long, DocumentDTO> result) {
+                    System.out.println("success");
+                }
+            });
+            try {
+                future.get();
+                documentService.update(message.getId(), "IN_PROCESS");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-
-            @Override
-            public void onSuccess(SendResult<Long, DocumentDTO> result) {
-                System.out.println("success");
-            }
-        });
     }
 }

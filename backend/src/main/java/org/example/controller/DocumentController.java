@@ -84,11 +84,8 @@ public class DocumentController {
     @LogMethodInfo
     public DocumentDTO send(@RequestBody IdDTO id) {
         DocumentDTO documentDTO = service.get(id.getId());
-        if ("NEW".equals(documentDTO.getStatus().getCode())) {
-                documentDTO = service.update(id.getId(), "IN_PROCESS");
-                kafkaSender.sendMessage(id.getId(), documentDTO);
-        }
-        return documentDTO;
+        kafkaSender.sendMessage(id.getId(), documentDTO);
+        return service.get(id.getId());
     }
 
     /**
