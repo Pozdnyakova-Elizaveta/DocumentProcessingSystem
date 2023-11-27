@@ -36,7 +36,7 @@ public class KafkaSender {
 
             @Override
             public void onFailure(Throwable ex) {
-                System.out.println("failure");
+                System.out.println("failure: " + ex.getMessage());
             }
 
             @Override

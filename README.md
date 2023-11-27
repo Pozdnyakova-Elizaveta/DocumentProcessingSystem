@@ -25,6 +25,15 @@
 Для создания базы данных необходимо накатить скрипт changelog-01.sql с помощью liquibaseUpdate
 ## Запуск
 ### Локальный запуск через терминал:
+Для локального запуска необходимо в [application.yml](backend/src/main/resources/application.yml) изменить
+```
+bootstrap-servers: kafka:9092
+```
+на
+```
+bootstrap-servers: localhost:29092
+```
+
 ### Запуск фронта
 
 ```
@@ -47,15 +56,11 @@ http://localhost:9000/#/
  - Необходимо выполнить build для Dockerfile в модулях backend и ui
  - Запустить docker-compose.yml в корневом каталоге - запустятся контейнеры бэкенда, фронта и базы данных
 
-### Адрес страницы при запуске через Docker
-```
-http://localhost:3006/#/
-```
 ### Запуск Kafka
-Запустить в модуле backend docker-compose(broker).yml
+Запустить в docker-compose.yml сервисы zookeper и kafka
 
 Топик "documents" предназначен для получения документов на обработку
-Ответ на документ создается в Offset Explorer в топике "documents_answer"
+Ответ на документ создается с помощью Offset Explorer в топике "documents_answer"
 
 Формат ответа на полученный документ: {"id":id,"status":status_code}, где id - номер документа, status_code - новое 
 значение статуса - "DECLINED" - отклонен или "ACCEPTED" - принят
