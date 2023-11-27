@@ -22,7 +22,7 @@
 Прописать в [application.yml](backend/src/main/resources/application.yml) и [docker-compose.yml](docker-compose.yml) 
 пути до БД
 
-Для создания базы данных необходимо накатить скрипт changelog-01.sql с помощью liquibaseUpdate
+Для создания базы данных необходимо накатить скрипты с помощью liquibaseUpdate
 ## Запуск
 ### Локальный запуск через терминал:
 Для локального запуска необходимо в [application.yml](backend/src/main/resources/application.yml) изменить
